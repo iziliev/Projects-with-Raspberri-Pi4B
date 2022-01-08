@@ -493,7 +493,7 @@ Could not find any info, then display the file name.
 ##### Step 2. Install Retropie-OLED Script
 
 	cd ~
-	git clone https://github.com/iziliev/RetroPie-OLED.git
+	git clone https://github.com/iziliev/RetroPie-0.96-OLED.git
 	cd ./RetroPie-OLED/
 	chmod 755 install.sh
 	./install.sh
