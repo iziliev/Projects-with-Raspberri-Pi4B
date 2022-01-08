@@ -1,32 +1,32 @@
 # Projects-with-Raspberri-Pi4B
-I.	Stop Sleeping and Safe mode
+
+## I.	Stop Sleeping and Safe mode
   
- 1.	Power Safe Mode
+ ###### 1.	Power Safe Mode
 
 		iw wlan0 get power_save
 
 		sudo iw wlan0 set power_save off
 
- 2.	Disable sleeping on Raspberry pi
+ ###### 2.	Disable sleeping on Raspberry pi
 
 		sudo apt-get install xscreensaver
 
-	Once installed, go to Rpi's desktop "Menu" (left top corner)
+Once installed, go to Rpi's desktop "Menu" (left top corner)
 
-	Go to preference ==> screensaver.
+Go to preference ==> screensaver.
 
-	You will see a screen saver main menu. In the mode drop-down menu, select "disable screensaver" then close the window.
+You will see a screen saver main menu. In the mode drop-down menu, select "disable screensaver" then close the window.
 
-	Reboot the Raspberry PI.
+Reboot the Raspberry PI.
 	
+###### 3.	Steps to disable Screen Blanking or Sleeping with the Raspberry Pi:
 
-3.	Steps to disable Screen Blanking or Sleeping with the Raspberry Pi:
-
-	Click on the Menu button on the upper right (Raspberry Pi Icon) ==> Preferences ==> Raspberry Pi Configuration.
+Click on the Menu button on the upper right (Raspberry Pi Icon) ==> Preferences ==> Raspberry Pi Configuration.
 	
 	![Test Image 1](1.png)
 	
-  In Raspberry Pi Configuration Window, click on Display Tab.
+In Raspberry Pi Configuration Window, click on Display Tab.
 
  
 
