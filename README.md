@@ -28,11 +28,11 @@ Click on the Menu button on the upper right (Raspberry Pi Icon) ==> Preferences 
 	
 In Raspberry Pi Configuration Window, click on Display Tab.
 
- 
+	![Test Image 2](2.png)
 
-  Look for the Screen Blanking row, click Disable. Then click OK.
+Look for the Screen Blanking row, click Disable. Then click OK.
 
- 
+	![Test Image 3](3.png) 
 
 A window will open and asks if you like to reboot the Raspberry Pi. Click Yes.
 II.	Install Anydesk
