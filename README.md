@@ -269,7 +269,7 @@ Download the script by typing in the following commands:
 
 	sudo python -m pip install --upgrade pip setuptools wheel
 
-	git clone https://github.com/iziliev/Raspberry-Pi-4B-0.96-OLED.git
+	git clone https://github.com/iziliev/Adafruit_Python_SSD1306.git
 
 Next, navigate to your library’s directory:
 
