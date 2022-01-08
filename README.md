@@ -24,7 +24,7 @@ I.	Stop Sleeping and Safe mode
 
 	Click on the Menu button on the upper right (Raspberry Pi Icon) ==> Preferences ==> Raspberry Pi Configuration.
 	
-	(1.png)
+	![Test Image 1](1.png)
 	
   In Raspberry Pi Configuration Window, click on Display Tab.
 
