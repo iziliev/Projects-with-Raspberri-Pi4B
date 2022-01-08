@@ -18,11 +18,14 @@ I.	Stop Sleeping and Safe mode
 	You will see a screen saver main menu. In the mode drop-down menu, select "disable screensaver" then close the window.
 
 	Reboot the Raspberry PI.
+	
 
-	3.	Steps to disable Screen Blanking or Sleeping with the Raspberry Pi:
+3.	Steps to disable Screen Blanking or Sleeping with the Raspberry Pi:
 
 	Click on the Menu button on the upper right (Raspberry Pi Icon) ==> Preferences ==> Raspberry Pi Configuration.
-
+	
+	(1.png)
+	
   In Raspberry Pi Configuration Window, click on Display Tab.
 
  
