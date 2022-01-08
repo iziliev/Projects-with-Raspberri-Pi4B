@@ -513,7 +513,7 @@ Could not find any info, then display the file name.
 	git clone https://github.com/iziliev/RetroPie-OLED.git
 	
 	git clone https://github.com/rferrari81/RetroPie-OLED.git
-	cd ./RetroPie-0.96-OLED/
+	cd ./RetroPie-OLED/
 	chmod 755 install.sh
 	./install.sh
 
