@@ -235,7 +235,7 @@ The I2C interface is disabled by default so you need to enable it. You can do th
 -	After this, we need to select Yes and press enter and then ok.
 -	After this, we need to reboot Raspberry Pi by typing below command:
 
-	sudo reboot
+		sudo reboot
 
 The following libraries may already be installed but run these commands anyway to make sure:
 
@@ -470,6 +470,21 @@ That’s it ! Now you can establish a remote connection to your Raspberry Pi aga
 ##### 2. Update
 ##### 3.Manage package –  optional package – kodi – install from binary
 ##### 4. RetroPie-OLED Show Game Title on 128x64 OLED I2C Display for RetroPie v4.0.2+
+
+
+The I2C interface is disabled by default so you need to enable it. You can do this within the raspi-config tool on the command line by running:
+
+	sudo raspi-config
+	
+A blue screen will appear. Now select Interfacing option.
+
+After this, we need to select I2C option.
+
+After this, we need to select Yes and press enter and then ok.
+
+After this, we need to reboot Raspberry Pi by typing below command:
+
+	sudo reboot
 
 	sudo ~/RetroPie-Setup/retropie_setup.sh
 
