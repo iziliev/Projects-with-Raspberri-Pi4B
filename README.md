@@ -139,7 +139,7 @@ before # we have to write:
 
 	/dev/sdb1	/media/NASHDD2	auto	uid=1001,gid=1001,noatime	0 0
 
-Hit: CTRL+X ==> Y ==> hit Enter
+##### Hit: CTRL+X ==> Y ==> hit Enter
 
 	sudo reboot
 
@@ -171,7 +171,7 @@ On end of lines we add:
 	directory mask = 0771
 	read only = no
 
-Hit: CTRL+X ==> Y ==> hit Enter
+##### Hit: CTRL+X ==> Y ==> hit Enter
 
 	sudo /etc/int.d/samba restart
 
@@ -191,7 +191,7 @@ Set Password:
 
 	sudo smbpasswd -a admin
 
-From PC add Map network \\IP >> Browse
+From PC add Map network \\IP ==> Browse
 
 ## V. Enable SMB1 on Windows 10
 
@@ -205,7 +205,7 @@ The installation will now proceed and you should be able to access shares using 
 
 gpedit.msc
 
-Computer configuration >> Administrative Templates >> Network >> Lanman Workstation
+Computer configuration ==> Administrative Templates ==> Network ==> Lanman Workstation
 
 On your right side, you should see a setting called Enable insecure guest logons. 
 
@@ -230,10 +230,10 @@ The I2C interface is disabled by default so you need to enable it. You can do th
 
 	sudo raspi-config
 
--	A blue screen will appear. Now select Interfacing option.
--	After this, we need to select I2C option.
--	After this, we need to select Yes and press enter and then ok.
--	After this, we need to reboot Raspberry Pi by typing below command:
+- A blue screen will appear. Now select Interfacing option.
+- After this, we need to select I2C option.
+- After this, we need to select Yes and press enter and then ok.
+- After this, we need to reboot Raspberry Pi by typing below command:
 
 		sudo reboot
 
@@ -470,13 +470,13 @@ That’s it ! Now you can establish a remote connection to your Raspberry Pi aga
 	
 	sudo ~/RetroPie-Setup/retropie_setup.sh
 	
-Update > OK > YES
+Update ==> OK ==> YES
 
 ##### 2.Install KODI
 
 	sudo ~/RetroPie-Setup/retropie_setup.sh
 
-Manage package >  Manage optional package > kodi > install from binary
+Manage package ==> Manage optional package ==> kodi ==> install from binary
 
 ##### 3. RetroPie-OLED Show Game Title on 128x64 OLED I2C Display for RetroPie v4.0.2+
 
@@ -486,8 +486,8 @@ The I2C interface is disabled by default so you need to enable it. You can do th
 	
 - A blue screen will appear. Now select Interfacing option.
 - After this, we need to select I2C option.
- -After this, we need to select Yes and press enter and then ok.
- -After this, we need to reboot Raspberry Pi by typing below command:
+- After this, we need to select Yes and press enter and then ok.
+- After this, we need to reboot Raspberry Pi by typing below command:
 
 	sudo reboot
 
@@ -518,9 +518,6 @@ Could not find any info, then display the file name.
 
 	cd ~
 	git clone https://github.com/iziliev/RetroPie-OLED.git (git clone https://github.com/rferrari81/RetroPie-OLED.git)
-	
 	cd ./RetroPie-OLED/
 	chmod 755 install.sh
 	./install.sh
-
-
