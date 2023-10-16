@@ -224,6 +224,75 @@ SCL ==> GPIO 3 (pin 5)
 VCC ==> 3.3V (pin 1)
 GND ==> GND (pin 9)
 
+##### 2. Software Connection
+
+	sudo apt-get update
+
+	sudo apt-get full-upgrade
+
+	sudo reboot
+	
+	sudo apt-get install python3-pip
+
+	sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+
+	sudo pip3 install --upgrade setuptools
+
+	cd ~
+
+	sudo pip3 install --upgrade adafruit-python-shell
+
+	wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+
+	sudo python3 raspi-blinka.py
+
+	sudo i2cdetect -y 1
+
+	sudo pip3 install adafruit-circuitpython-ssd1306
+
+	sudo apt-get install python3-pil
+
+	sudo python -m pip install --upgrade pip setuptools wheel
+
+	git clone https://github.com/iziliev/Raspberry-Pi-4B-0.96-OLED.git
+
+	cd Raspberry-Pi-4B-0.96-OLED
+
+	sudo python setup.py install
+
+	cd examples
+
+	python3 stats.py
+
+	crontab -e
+
+On the end of file write:
+
+	@reboot python3 /home/pi/stats.py &
+
+Ctrl+X Y and Enter
+
+	sudo nano /etc/rc.local
+
+Scroll down, and just before the exit 0 line, enter the following:
+
+	sudo python /home/pi/stats.py &
+
+In folder Raspberry-Pi-4B-0.96-OLED/examples copy file stats.py and PixelOperator.ttf to main directory /home/pi/
+
+## VII.	Connect and Program an OLED Display For Raspberry Pi (for old Raspbian OS – see VI point)
+
+##### 1. Hardware Connection
+
+	Below are the connections of OLED module with Raspberry Pi 4 Model B:
+
+![Test Image 4](4.png) 
+		
+SDA ==> GPIO 2 (pin 3)
+SCL ==> GPIO 3 (pin 5)
+VCC ==> 3.3V (pin 1)
+GND ==> GND (pin 9)
+
 ##### 2. Enable I2C Interface
 
 The I2C interface is disabled by default so you need to enable it. You can do this within the raspi-config tool on the command line by running:
@@ -379,11 +448,11 @@ Scroll down, and just before the exit 0 line, enter the following:
 
 Save and exit. Reboot to verify that the screen comes up on boot!
 
-## VII.	Install OpenOffice
+## VIII.	Install OpenOffice
 
 	sudo apt-get install openoffice.org
 
-## VIII. How to fix ‘Cannot currently show the desktop’ on Raspberry Pi
+## XI. How to fix ‘Cannot currently show the desktop’ on Raspberry Pi
 
 	sudo apt-get install openoffice.org
 
@@ -464,7 +533,7 @@ reboot
 ##### Reconnect remotely with your VNC viewer.
 That’s it ! Now you can establish a remote connection to your Raspberry Pi again. And if you executed previous steps carefully, the black screen with ‘Cannot currently show the desktop’ won’t appear any more.
 
-## IX.	Install Retropie
+## X.	Install Retropie
 
 ##### 1. Raspbery Setup 
 	
