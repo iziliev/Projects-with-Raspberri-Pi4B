@@ -224,6 +224,75 @@ SCL ==> GPIO 3 (pin 5)
 VCC ==> 3.3V (pin 1)
 GND ==> GND (pin 9)
 
+##### 2. Software Connection
+
+	sudo apt-get update
+
+	sudo apt-get full-upgrade
+
+	sudo reboot
+	
+	sudo apt-get install python3-pip
+
+	sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+
+	sudo pip3 install --upgrade setuptools
+
+	cd ~
+
+	sudo pip3 install --upgrade adafruit-python-shell
+
+	wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+
+	sudo python3 raspi-blinka.py
+
+	sudo i2cdetect -y 1
+
+	sudo pip3 install adafruit-circuitpython-ssd1306
+
+	sudo apt-get install python3-pil
+
+	sudo python -m pip install --upgrade pip setuptools wheel
+
+	git clone https://github.com/iziliev/Raspberry-Pi-4B-0.96-OLED.git
+
+	cd Raspberry-Pi-4B-0.96-OLED
+
+	sudo python setup.py install
+
+	cd examples
+
+	python3 stats.py
+
+	crontab -e
+
+On the end of file write:
+
+	@reboot python3 /home/pi/stats.py &
+
+Ctrl+X Y and Enter
+
+	sudo nano /etc/rc.local
+
+Scroll down, and just before the exit 0 line, enter the following:
+
+	sudo python /home/pi/stats.py &
+
+In folder Raspberry-Pi-4B-0.96-OLED/examples copy file stats.py and PixelOperator.ttf to main directory /home/pi/
+
+## VII.	Connect and Program an OLED Display For Raspberry Pi (for old Raspbian OS – see VI point)
+
+##### 1. Hardware Connection
+
+	Below are the connections of OLED module with Raspberry Pi 4 Model B:
+
+![Test Image 4](4.png) 
+		
+SDA ==> GPIO 2 (pin 3)
+SCL ==> GPIO 3 (pin 5)
+VCC ==> 3.3V (pin 1)
+GND ==> GND (pin 9)
+
 ##### 2. Enable I2C Interface
 
 The I2C interface is disabled by default so you need to enable it. You can do this within the raspi-config tool on the command line by running:
@@ -379,11 +448,11 @@ Scroll down, and just before the exit 0 line, enter the following:
 
 Save and exit. Reboot to verify that the screen comes up on boot!
 
-## VII.	Install OpenOffice
+## VIII.	Install OpenOffice
 
 	sudo apt-get install openoffice.org
 
-## VIII. How to fix ‘Cannot currently show the desktop’ on Raspberry Pi
+## XI. How to fix ‘Cannot currently show the desktop’ on Raspberry Pi
 
 	sudo apt-get install openoffice.org
 
@@ -464,7 +533,7 @@ reboot
 ##### Reconnect remotely with your VNC viewer.
 That’s it ! Now you can establish a remote connection to your Raspberry Pi again. And if you executed previous steps carefully, the black screen with ‘Cannot currently show the desktop’ won’t appear any more.
 
-## IX.	Install Retropie
+## X.	Install Retropie
 
 ##### 1. Raspbery Setup 
 	
@@ -521,3 +590,129 @@ Could not find any info, then display the file name.
 	cd ./RetroPie-OLED/
 	chmod 755 install.sh
 	./install.sh
+
+## XI. Install WiFi Print-Server on Raspberry Pi Zero
+
+##### 1. Prepare the MicroSD Card
+
+![Test Image 1](9.png)
+
+![Test Image 1](10.png)
+
+Naming:
+##### •	For this guide, I'll be naming things as follows. Every time you see one of these names, replace it with your own.
+##### •	pi = username on the RPi
+##### •	print-server = the computer name of the RPi
+##### •	sam = the printer queue name of my Samsung Printer
+##### •	RPi is short for Raspberry Pi.
+
+##### 2. Initialize the RPi and Install Packages
+
+Insert SD card into the RPi and power up. Give it a few minutes. Find the IP address for printer-server on the router's LAN > DHCP page. Give it a fixed IP. SSH into the RPi from Windows:
+Open command prompt by typing: ⊞ Win+R > cmd > press Enter
+Copy and paste this command, replacing the username (pi) and server name (print-server) with your own:
+
+	ssh pi@print-server
+
+or on Putty.
+For the rest of the guide, copy each of my example lines one by one and paste them into the SSH window. To paste inside the SSH environment, right-click and choose paste from the contextual menu.
+Update and upgrade. You should go make some soup.
+
+	sudo apt update -y && sudo apt upgrade -y
+
+Install the CUPS print server and SAMBA file sharing packages. This will take a several additional minutes.
+
+	sudo apt install -y cups samba
+
+##### 3. Config CUPS
+Add an administrative user for the printer. Replace pi with your username.
+
+	sudo usermod -a -G lpadmin pi
+
+Enable web-based admin pages.
+
+	sudo cupsctl --remote-any
+
+Restart CUPS.
+
+	sudo systemctl restart cups
+
+##### 4. Config SAMBA
+Edit config file:
+
+	sudo nano /etc/samba/smb.conf
+
+Go to the bottom of the file. Ctl-V jumps you down one page at a time.
+
+Under [printers]:
+
+	guest ok = yes
+
+Under [print$]:
+
+	read only = no
+
+Ctl-X, Y, Enter to save and exit nano.
+
+Restart Samba service.
+
+	sudo systemctl restart smbd
+
+5.	On CUPS Config Web Site
+
+![Test Image 1](11.png)
+
+![Test Image 1](12.png)
+
+![Test Image 1](13.png)
+
+![Test Image 1](14.png)
+
+	sudo shutdown now
+
+		1. Plug the printer in with the USB OTG cable. Power up the print server. Turn on the printer.
+		2.	Go to the CUPS config web page: https://print-server:631/admin/
+		3.	Click through the warning about an insecure HTTPS connection.
+		4.	"Not Private" > Advanced > Proceed.
+		5.	Click the "Add Printer" button.
+		6.	Log in using your RPi un (pi) and pw.
+		7.	Select your printer from local printers. Continue.
+		8.	Fill out names as you prefer. I named my printer "sam". Check "Share This Printer". Continue.
+		9.	Find your Make. I uploaded a PPD file for a similar model Samsung printer (Samsung-M2022W-splix.ppd) which I dug up from a Google-cached version of a page on OpenPrinting.org. Continue.
+		10.	Set printer options. I kept defaults.
+		11.	Now you're under Printers menu. Administration pulldown > Set as server default.
+		12.	You're done here.
+
+##### 6. On the Windows PC
+
+![Test Image 1](15.png)
+
+![Test Image 1](16.png)
+
+![Test Image 1](17.png)
+
+![Test Image 1](18.png)
+
+![Test Image 1](19.png)
+
+![Test Image 1](20.png)
+
+Enable the insecure guest logon:
+•	⊞ Win+R > gpedit.msc
+•	Local Computer Policy > Computer Configuration > Administrative Templates > Network > Lanman Workstation > Enable insecure guest logons > Enabled > OK.
+
+Use the Windows command line to add the new network printer. Remember to use your own names for the server (print-server) and printer (sam).
+•	Win-R, cmd, then:
+
+	rundll32 printui.dll PrintUIEntry /in /n \\print-server\sam
+
+•	Choose a print driver using the wizard.
+•	Set as the default printer in Windows. Print a test page.
+
+##### 7. Back Up Your New MicroSD Card
+
+![Test Image 1](21.png)
+
+Now that you're finished with the installation and configuration, it's a wise idea to make a .img backup of the card. In Windows, use the "READ" function of Win32 Disk Imager. (I had to quit out of Google Drive before that app would open in Windows 11.)
+For me, the writing process took a bit over one minute per GB to complete. (I recommend a 16GB card because a bigger card will only take longer to write the OS to and to back up, and will forever take up more storage space for the backup img.)
+In case of need, you can use RPi Imager to burn that .img file to a new MicroSD card and you'll be back in business.
