@@ -280,6 +280,10 @@ Scroll down, and just before the exit 0 line, enter the following:
 
 In folder Raspberry-Pi-4B-0.96-OLED/examples copy file stats.py and PixelOperator.ttf to main directory /home/pi/
 
+	cp Raspberry-Pi-4B-0.96-OLED/examples/stats.py /home/pi/
+	cp Raspberry-Pi-4B-0.96-OLED/examples/PixelOperator.ttf /home/pi/
+
+
 ## VII.	Connect and Program an OLED Display For Raspberry Pi (for old Raspbian OS – see VI point)
 
 ##### 1. Hardware Connection
