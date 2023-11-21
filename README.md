@@ -360,6 +360,11 @@ Then execute the stats script:
 
 	python3 stats.py
 
+In folder Raspberry-Pi-4B-0.96-OLED/examples copy file stats.py and PixelOperator.ttf to main directory /home/pi/
+
+	cp Raspberry-Pi-4B-0.96-OLED/examples/stats.py /home/pi/
+	cp Raspberry-Pi-4B-0.96-OLED/examples/PixelOperator.ttf /home/pi/
+
 ##### 4. Adjusting The Display Content & Layout
 
 The following steps are done on the Raspberry Pi OS desktop and edits to the script are made in Thonny Python IDE (which comes pre-installed).
@@ -449,6 +454,13 @@ The fastest and easiest way is to put it in /etc/rc.local. Run the bellow comman
 Scroll down, and just before the exit 0 line, enter the following:
 
 	sudo python /home/pi/stats.py &
+
+In folder Raspberry-Pi-4B-0.96-OLED/examples copy file stats.py and PixelOperator.ttf to main directory /home/pi/
+
+	cp Raspberry-Pi-4B-0.96-OLED/examples/stats.py /home/pi/
+
+	cp Raspberry-Pi-4B-0.96-OLED/examples/PixelOperator.ttf /home/pi/
+
 
 Save and exit. Reboot to verify that the screen comes up on boot!
 
@@ -597,7 +609,9 @@ Could not find any info, then display the file name.
 
 ## XI. Install WiFi Print-Server on Raspberry Pi Zero
 
-##### 1. Prepare the MicroSD Card
+##### •	Printing
+
+##### 1. Prepare the MicroSD Card (Raspberry Pi OS (Legasy)Lite)
 
 ![Test Image 1](9.png)
 
@@ -640,6 +654,11 @@ Enable web-based admin pages.
 Restart CUPS.
 
 	sudo systemctl restart cups
+
+Install driver for Samsung Printer: 
+	
+	sudo apt install printer-driver-splix
+
 
 ##### 4. Config SAMBA
 Edit config file:
@@ -720,3 +739,169 @@ Use the Windows command line to add the new network printer. Remember to use you
 Now that you're finished with the installation and configuration, it's a wise idea to make a .img backup of the card. In Windows, use the "READ" function of Win32 Disk Imager. (I had to quit out of Google Drive before that app would open in Windows 11.)
 For me, the writing process took a bit over one minute per GB to complete. (I recommend a 16GB card because a bigger card will only take longer to write the OS to and to back up, and will forever take up more storage space for the backup img.)
 In case of need, you can use RPi Imager to burn that .img file to a new MicroSD card and you'll be back in business.
+
+##### • Scanning with Samsung M267xM287 series
+
+To get started, log back in to the Pi with SSH and install SANE:
+
+	sudo apt-get update
+
+	sudo apt-get install sane
+
+SANE comes with a few useful tools for checking configuration. First, see if SANE can find your scanner:
+
+	sudo sane-find-scanner
+
+You should get some output like this:
+
+  	# sane-find-scanner will now attempt to detect your scanner. If the
+  	# result is different from what you expected, first make sure your
+  	# scanner is powered up and properly connected to your computer.
+
+  	# No SCSI scanners found. If you expected something different, make sure that
+  	# you have loaded a kernel SCSI driver for your SCSI adapter.
+  	# Also you need support for SCSI Generic (sg) in your operating system.
+  	# If using Linux, try "modprobe sg".
+
+	found USB scanner (vendor=0x04e8, product=0x3461 [M267x 287x Series]) at libusb:001:002
+
+  	# Your USB scanner was (probably) detected. It may or may not be supported by
+  	# SANE. Try scanimage -L and read the backend's manpage.
+
+  	# Not checking for parallel port scanners.
+
+  	# Most Scanners connected to the parallel port or other proprietary ports
+  	# can't be detected by this program.  
+
+If the program returns information about your make and model like above, you're good to go. Next, try the following:
+
+	sudo scanimage -L
+
+You should get output like this:
+
+	device `xerox_mfp:libusb:001:002' is a Samsung M267x 287x Series multi-function peripheral
+
+(...where print-server is the hostname of the print server, Alternatively, you can use the IP address of the Pi, e.g. 192.168.10.125). Once the transfer is complete, you can open the file from your home directory with a program like GIMP. Now we know that the scanner is working locally, we can set up the sane daemon. 
+Open the configuration file **/etc/default/saned** and set this option to turn the sane daemon/server on:
+
+	RUN=yes
+
+Next, open the file **/etc/sane.d/saned.conf** and add this line, which tells the server to accept connections from all IP addresses in the range 192.168.10.1 to 192.168.10.255:
+
+	192.168.10.125/24
+
+Also uncomment this line:
+
+	data_portrange = 10000 - 10100
+
+We also need to fix the permissions so that the sane daemon can access the scanner without root. Part of the output from **sane-find-scanner** was the following line:
+
+	found USB scanner (vendor=0x04e8, product=0x3461 [M267x 287x Series]) at libusb:001:002
+
+The section "at libusb:001:002" at the end tells us that the scanner is located at **/dev/bus/usb/001/005**. 
+Let's check who owns that file:
+
+	ls -l /dev/bus/usb/001
+
+	total 0
+	crw-rw-r-T 1 root root 189, 0 Jul  6 19:44 001
+	crw-rw-r-T 1 root root 189, 1 Jan  1  1970 002
+	crw-rw-r-T 1 root root 189, 2 Jan  1  1970 003
+	crw-rw-r-T 1 root root 189, 3 Jul  6 19:44 004
+	crw-rw-r-T 1 root lp   189, 4 Jul  6 19:49 005
+
+As you can see, it is owned by root with the group lp (linux printing). We need to add the sane daemon to the lp group to give it the necessary permissions:
+
+	sudo adduser saned lp
+
+Now restart the SANE daemon to make all of the changes take effect. On Debian Wheezy and before, the command is:
+
+	sudo service saned restart
+
+	sudo systemctl enable saned.socket
+
+	systemctl status saned.socket
+
+And tell the SANE service to start automatically when the Pi starts. On Wheezy:
+
+	sudo update-rc.d saned defaults
+
+Or on Jessie:
+
+	sudo systemctl enable saned.socket
+
+Now check SANE is running properly:
+
+	sudo service saned status
+
+You can also check that the port is available externally by using nmap to port scan the Pi from your laptop:
+
+	nmap print-server
+
+(again, assuming print-server is the hostname of your pi - alternatively, use the IP addresss). You shoudl get results like this:
+
+	Nmap scan report for print-server (192.168.1.151)
+	Host is up (0.019s latency).
+	rDNS record for 192.168.1.151: print-server.lan
+	Not shown: 997 closed ports
+	PORT     STATE SERVICE
+	22/tcp   open  ssh
+	631/tcp  open  ipp
+	6566/tcp open  sane-port
+
+All good: the Pi has services bound to port 22 for SSH, 631 for printing/CUPS and 6566 for scanning/SANE.
+
+Now Open **sudo nano /usr/lib/udev/rules.d/65-sane.rules**
+
+	sudo nano /usr/lib/udev/rules.d/65-sane.rules
+
+and see if there is there is a line with the **vendorID** and **productID** of your scanner. If there is not any, create the new file
+
+	sudo nano /etc/udev/rules.d/65-sane-missing-scanner.rules
+
+with the following contents:
+
+	ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="3461", MODE="0664", GROUP="lp", ENV{libsane_matched}="yes"
+
+Another tip, is that you can add your device (scanner) in backend file:
+
+Add **usb 0x03f0 0x2504** to 
+
+	sudo nano /etc/sane.d/hp4200.conf 
+
+so it looks like this:
+
+	#
+	# Configuration file for the hp4200 backend
+	#
+	#
+	# HP4200
+	#usb 0x03f0 0x0105
+	usb 0x04e8 0x3461
+
+Client configuration
+
+I'm going to use KDE as an example again: install xsane and skanlite on the client machine:
+
+	sudo apt-get update
+
+	sudo apt-get install xsane skanlite
+
+Now we need to edit a config file to tell your computer where to look for sane services. Edit **/etc/sane.d/net.conf**:
+
+	sudo nano /etc/sane.d/net.conf
+
+and uncomment this line
+
+	connect_timeout = 60
+
+And add the IP address of your print server to the file:
+
+	192.168.10.125/24
+
+Windows client - **SANEWinDS_1.1.8600.msi**
+
+	Host: 192.168.10.125 
+	Port: 24 or default
+
+
