@@ -904,4 +904,51 @@ Windows client - **SANEWinDS_1.1.8600.msi**
 	Host: 192.168.10.125 
 	Port: 24 or default
 
+##### 8. Install Pi-Hosted Portainer
+	sudo apt update
 
+	sudo apt upgrade
+
+	sudo reboot
+
+	sudo apt install git
+
+	ls
+
+	mkdir Downloads
+
+	cd Downloads/
+
+	git clone https://github.com/novaspirit/pi-hosted
+
+	cd pi-hosted/
+
+	ls
+
+	./install_docker.sh
+
+	groups
+
+	cd Downloads/
+
+	cd pi-hosted/
+
+	./install_docker.sh
+
+	cat install_portainer.sh
+
+go in browser
+
+	https://192.168.10.174:9443
+
+username: admin
+password: raspberry!84
+in settings: https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/template/portainer-v2-arm32.json
+in environment -> local ip: 192.168.10.174
+
+	cd
+
+	sudo apt install shellinabox
+
+
+SHELLINABOX: https://192.168.10.174:4200/
