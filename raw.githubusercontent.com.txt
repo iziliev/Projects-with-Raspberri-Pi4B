@@ -1,0 +1,5 @@
+https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/template/portainer-v2-arm32.json
+https://raw.githubusercontent.com/portainer/templates/master/templates-2.0.json
+
+https://raw.githubusercontent.com/Lissy93/portainer-templates/main/templates.json
+https://raw.githubusercontent.com/calimero100582/portainer_templates/main/portainer.json
