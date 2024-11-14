@@ -933,22 +933,20 @@ Windows client - **SANEWinDS_1.1.8600.msi**
 
 	cd pi-hosted/
 
-	./install_docker.sh
-
-	cat install_portainer.sh
+	./install_portainer.sh
 
 go in browser
 
-	https://192.168.10.174:9443
+	https://192.168.10.124:9443
 
 username: admin
 password: raspberry!84
 in settings: https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/template/portainer-v2-arm32.json
-in environment -> local ip: 192.168.10.174
+in environment -> local ip: 192.168.10.124
 
 	cd
 
 	sudo apt install shellinabox
 
 
-SHELLINABOX: https://192.168.10.174:4200/
+SHELLINABOX: https://192.168.10.124:4200/
